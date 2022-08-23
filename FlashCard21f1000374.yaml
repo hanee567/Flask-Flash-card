@@ -1,0 +1,590 @@
+openapi: 3.0.0
+info:
+  title: FLASH CARD APPLICATION Viroopaksh Chekuri
+  description: >
+    <div>This is a basic web application where user can register, login
+    create flash card decks with appropriate details and populate, delete, edit
+    the cards in the decks and can check their score, also review and upgrade themselves.
+    </div>
+
+    <h3> User Table Schema </h3> 
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>id</td>
+        <td>Integer</td>
+        <td>Primary Key, Auto Increment</td>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>String</td>
+        <td>Unique, Not Null</td>
+      </tr>
+      <tr>
+        <td>username</td>
+        <td>String</td>
+        <td>Unique, Not Null</td>
+      </tr>      
+      <tr>
+        <td>password</td>
+        <td>String</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>last_reviewed</td>
+        <td>Datetime</td>
+        <td></td>
+      </tr>
+    </tbody>
+    </table>
+
+    <h3> Deck Table Schema </h3> 
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>id</td>
+        <td>Integer</td>
+        <td>Primary Key, Auto Increment</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>String</td>
+        <td>Unique, Not Null</td>
+      </tr>
+      <tr>
+        <td>descrption</td>
+        <td>String</td>
+        <td></td>
+      </tr>      
+      
+      
+    </tbody>
+    </table>
+
+
+    <h3> Card Table Schema </h3> 
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>id</td>
+        <td>Integer</td>
+        <td>Primary Key, Auto Increment</td>
+      </tr>
+      <tr>
+        <td>front</td>
+        <td>String</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>back</td>
+        <td>String</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>DeckId</td>
+        <td>Integer</td>
+        <td>Foreign Key (deck.id), Not Null</td>
+    </tbody>
+    </table>
+
+    <h3> UserDeck Table Schema </h3> 
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>user_id</td>
+        <td>Integer</td>
+        <td>Primary Key, Not Null, Foreign key (user.id)</td>
+      </tr>
+      <tr>
+        <td>deck_id</td>
+        <td>Integer</td>
+        <td>Primary Key, Not Null, Foreign key (deck.id)</td>
+      </tr>
+      <tr>
+        <td>score</td>
+        <td>Decimal</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>last_reviewed</td>
+        <td>Datetime</td>
+        <td></td>
+      </tr>
+    </tbody>
+    </table>
+
+    <h3> UserCard Table Schema </h3> 
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>user_id</td>
+        <td>Integer</td>
+        <td>Primary Key, Not Null, Foreign key (user.id)</td>
+      </tr>
+      <tr>
+        <td>card_id</td>
+        <td>Integer</td>
+        <td>Primary Key, Not Null, Foreign key (card.id)</td>
+      </tr>
+      <tr>
+        <td>score</td>
+        <td>Decimal</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>difficulty</td>
+        <td>Decimal</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>last_reviewed</td>
+        <td>Datetime</td>
+        <td></td>
+      </tr>
+    </tbody>
+    </table>
+
+    <h3> Error Codes </h3> 
+    <!-- Change error codes-->
+    <table>
+      <thead>
+        <th>Resource</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>User</td>
+        <td>USER001</td>
+        <td>User credentials error</td>
+      </tr>
+      <tr>
+        <td>User</td>
+        <td>USER002</td>
+        <td>User does not exist.</td>
+      </tr>
+      <tr>
+        <td>User</td>
+        <td>USER003</td>
+        <td>User is not logged in a session.</td>
+      </tr>
+      <tr>
+        <td>Deck</td>
+        <td>DECK001</td>
+        <td>Deck does not exist.</td>
+      </tr>
+      <tr>
+        <td>Deck</td>
+        <td>DECK002</td>
+        <td>Deck does not belong to user.</td>
+      </tr>
+      <tr>
+        <td>Deck</td>
+        <td>DECK003</td>
+        <td>Deck with the given name already exists</td>
+      </tr>
+      
+      <tr>
+        <td>Card</td>
+        <td>CARD001</td>
+        <td>Card does not exist</td>
+      </tr>
+      <tr>
+        <td>Card</td>
+        <td>CARD002</td>
+        <td>Card does not belong to the deck</td>
+      </tr>
+      <tr>
+        <td>Card</td>
+        <td>CARD003</td>
+        <td>Card and deck does not belong to the user</td>
+      </tr>
+      <tr>
+        <td>Request</td>
+        <td>REQUEST001</td>
+        <td>Wrong request body</td>
+      </tr>
+    </tbody>
+    </table>
+
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000/
+paths:
+  /{username}/:
+    description: End point for user
+    post:
+      description: Operation to read user data.
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+              type: string
+              example: "ViroopakshC"
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: "ViroopakshC"
+                  password:
+                    type: string
+                    example: "MA101"
+      responses:
+        '200':
+          description: Request successful
+          content:
+            application/json:
+              schema:
+                title: user object
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                    example: 201
+        '404':
+          description: Error code USER001 or USER002
+        '500':
+          description: Internal server error
+          
+        
+  /user/{user_id}/{deck_id}/:
+      description: End point for deck
+      get:
+        description: Operation to read user data.
+        parameters:
+          - in: path
+            name: user_id
+            required: true
+            schema:
+                type: integer
+                example: 1
+          - in: path
+            name: deck_id
+            required: true
+            schema:
+              type: integer
+              example: 2
+         
+        responses:
+          '200':
+            description: Request successful
+            content:
+              application/json:
+                schema:
+                  title: deck object
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "Deck"
+                    description:
+                      type: string
+                      example: "Deck description"
+                    score:
+                      type: integer
+                      example: 100
+                    last_reviewed:
+                      type: string
+                      example: "date time year"
+  
+      put:
+        description: Operation to read user data.
+        parameters:
+          - in: path
+            name: user_id
+            required: true
+            schema:
+                type: integer
+                example: 1
+          - in: path
+            name: deck_id
+            required: true
+            schema:
+              type: integer
+              example: 2
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Deck name"
+                  description:
+                    type: string
+                    example: "Deck description"
+  
+        responses:
+          '200':
+            description: Request successful
+            content:
+              application/json:
+                schema:
+                  title: deck object
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "Deck"
+                    description:
+                      type: string
+                      example: "Deck description"
+                    score:
+                      type: integer
+                      example: 100
+                    last_reviewed:
+                      type: string
+                      example: "date time year"
+      delete:
+        description: Operation to delete deck data.
+        parameters:
+          - in: path
+            name: user_id
+            required: true
+            schema:
+                type: integer
+                example: 1
+          - in: path
+            name: deck_id
+            required: true
+            schema:
+              type: integer
+              example: 2
+        responses:
+          '200':
+            description: Request successful
+            content:
+              application/json:
+                schema:
+                  title: deck object
+                  type: object
+                  properties:
+                    status_code:
+                      type: string
+                      example: "Successfully deleted"
+  /user/{user_id}/:
+      description: End point for deck resource.     
+      post:
+        description: Operation to create new deck.
+        parameters:
+          - in: path
+            name: user_id
+            required: true
+            schema:
+                type: integer
+                example: 1
+          
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Deck name"
+                  description:
+                    type: string
+                    example: "Deck description"
+        responses:
+          '200':
+            description: Request successful
+            content:
+              application/json:
+                schema:
+                  title: deck object
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "Deck name"
+                    description:
+                      type: string
+                      example: "Deck name"
+  /user/{user_id}/{deck_id}/{card_id}/:
+    description: URL to see what about cards of a user.
+    get:
+      description: front and back of a card.
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+        - in: path
+          name: deck_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+        - in: path
+          name: card_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+             
+      responses:
+        '200':
+          description: Successfully fetched
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  front:
+                    type: string
+                  back:
+                    type: string
+    put:
+      description: update front and back of a card.
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+        - in: path
+          name: deck_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+        - in: path
+          name: card_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  front:
+                    type: string
+                    example: "Question"
+                  back:
+                    type: string
+                    example: "Answer"  
+      responses:
+        '200':
+          description: Successfully fetched
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  front:
+                    type: string
+                  back:
+                    type: string
+    delete:
+      description: delete a card.
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+        - in: path
+          name: deck_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+        - in: path
+          name: card_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+            
+      responses:
+        '200':
+          description: Successfully fetched
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: string
+  /user/{user_id}/{deck_id}/card/:
+    description: something
+    post:
+      description: update front and back of a card.
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+        - in: path
+          name: deck_id
+          required: true
+          schema:
+            type: integer
+            example: 101
+       
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  front:
+                    type: string
+                    example: "Question"
+                  back:
+                    type: string
+                    example: "Answer"  
+      responses:
+        '200':
+          description: Successfully fetched
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  front:
+                    type: string
+                  back:
+                    type: string
+ 

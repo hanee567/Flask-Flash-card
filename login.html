@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      LoginPage
+    </title>
+    
+    <style>
+      html{
+        background-image: url('static/bg-image.jpg');
+      }
+      Body {  
+          font-family: sans-serif;  
+          
+        }  
+      h3{
+          text-align: center;
+      }
+
+      button {   
+              background-color: green;   
+              width: 100%;  
+              color: orange;   
+              padding: 15px;   
+              margin: 10px 0px;   
+              border: none;   
+              cursor: pointer;   
+              }   
+      form {   
+              border: 3px solid #f1f1f1;   
+              padding: 25px;
+              background-color: transparent;
+              opacity: 0.7;
+              
+              top: 50%;
+              left: 50%;
+              transform: translate(0%, 25%)
+          }   
+      form:hover{
+        background-color: lightblue;
+        opacity:1;
+      }
+      input {   
+              width: 100%;   
+              margin: 8px 0;  
+              padding: 12px 20px;   
+              display: inline-block;   
+              border: 2px solid green;   
+              box-sizing: border-box;   
+          }  
+      button:hover {   
+              opacity: 0.7;   
+          }   
+    </style>
+    <link rel="icon" href="data:,">
+  </head>
+  <body>
+    <br>
+
+    <form method="POST" action="/" >
+      <h3>Enter login Details</h3>
+      <label>Username or Email</label>
+      <input type="text" name="Username" placeholder="Example: Random Kirloskar" required/>
+      <label>Password</label>
+      <input type="password" name="Password" placeholder="Example: Svt37_4*ndP"/>
+      {% if not value %}
+        <p style="color:red;font-size:medium;">Incorrect email or password</p>
+      {% endif %}
+      <button type="submit">Sign in</button>
+      New Here? <a href="/register">Sign up</a>
+    </form> 
+
+  </body>
+
+</html>

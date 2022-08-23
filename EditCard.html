@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{user.username}}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <style>
+            button {   
+              background-color: green;   
+              width: 100%;  
+              color: orange;   
+              padding: 15px;   
+              margin: 10px 0px;   
+              border: none;   
+              cursor: pointer;   
+              }  
+              form {   
+              border: 3px solid #f1f1f1;   
+              padding: 25px;
+              background-color: transparent;
+              opacity: 0.7;
+              
+              top: 50%;
+              left: 50%;
+              transform: translate(0%, 25%)
+          } 
+          input {   
+              width: 100%;   
+              margin: 8px 0;  
+              padding: 12px 20px;   
+              display: inline-block;   
+              border: 2px solid green;   
+              box-sizing: border-box;   
+          } 
+        </style>
+        <link rel="icon" href="data:,">
+    </head>
+    <body style="background-color: bisque;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="nav-link disabled">{{ user.username }}</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <a class="nav-link active" aria-current="page" href="/">Home</a>
+                  <a class="nav-link" href="#">Review</a>
+                </div>
+              </div>
+            </div>
+          </nav>    
+        <form action="/{{uid}}/{{did}}/{{cid}}/editcard" style="background-color:bisque;padding:10px;" method="POST">
+            <label>Front of the card</label>
+            <input type="text" name="Front" value="{{card.front}}" required>
+            
+            <label>Back of the card</label>
+            <input type="text" name="Back" value="{{card.back}}" required>
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
